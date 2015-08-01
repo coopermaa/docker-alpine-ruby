@@ -27,11 +27,32 @@ You can run a Ruby script by using the Ruby Docker image directly:
 $ docker run --rm -v "$PWD":/app coopermaa/alpine-ruby ruby /app/your-daemon-or-script.rb
 ```
 
-## A note about Dockerfile
+## How to use onbuild image  
 
-* The package `ruby-dev` depends on `ruby`, `ruby-irb`, `ruby-rake`, `ruby-io-console`, `ruby-minitest`,
-  `ruby-json`, `ruby-libs`... The `apk` package manager will install all of them. 
-  Run `apk info -a ruby-dev` for more information.
- 
-* Add the package `build-base` if you want to build gem native extesion (It will increase about 120MB to the image).
-  The package `build-base` is similar package to `build-essential`.
+Create a Dockerfile in your Ruby app project
+
+```
+FROM coopermaa/alpine-ruby:2.2-onbuild]
+CMD ["./your-daemon-or-script.rb"]
+```
+Put this file in the root of your app, next to the Gemfile.
+
+This image includes multiple `ONBUILD` triggers which should be all you need to bootstrap most applications. 
+The build will `COPY . /usr/src/app` and `RUN bundle install`.
+
+You can then build and run the Ruby image:
+
+```bash
+$ docker build -t my-ruby-app .
+$ docker run -it --name my-running-script my-ruby-app
+```
+
+> ## A note about Dockerfile
+>
+> * The package `ruby-dev` depends on `ruby`, `ruby-irb`, `ruby-rake`, `ruby-io-console`, `ruby-minitest`,
+>  `ruby-json`, `ruby-libs`... The `apk` package manager will install all of them. 
+>  Run `apk info -a ruby-dev` inside a container for more information.
+> 
+> * Add the package `build-base` if you want to build gem native extesion (It will increase about 120MB to the image).
+>  The package `build-base` is similar package to `build-essential`.
+
