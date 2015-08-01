@@ -1,4 +1,5 @@
 # alpine-ruby
+[![](https://badge.imagelayers.io/coopermaa/alpine-ruby:latest.svg)](https://imagelayers.io/?images=coopermaa/alpine-ruby:latest 'Get your own badge on imagelayers.io')
 
 Minimalist Docker image for Ruby based on Alpine linux.
 
