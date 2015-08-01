@@ -5,16 +5,27 @@ Minimalist Docker image for Ruby based on Alpine linux.
 
 ## How to use this image
 
+### Run interactive Ruby shell
+
 ```bash
 $ docker run -it coopermaa/alpine-ruby
 ```
-
 This will drop you an interactive Ruby shell.
+
+### Run one line of Ruby script
 
 ```bash
 $ docker run --rm coopermaa/alpine-ruby -e 'puts "Hello World"'
 ```
-Run one line of Ruby script. You will get printed "Hello World" from Ruby.
+You will get printed "Hello World" from Ruby.
+
+### Run a single Ruby script
+
+You can run a Ruby script by using the Ruby Docker image directly:
+
+```bash
+$ docker run --rm -v "$PWD":/app coopermaa/alpine-ruby ruby /app/your-daemon-or-script.rb
+```
 
 ## A note about Dockerfile
 
