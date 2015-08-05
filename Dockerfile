@@ -1,7 +1,7 @@
 FROM alpine:3.2
 MAINTAINER Cooper Maa <coopermaa77@gmail.com>
 
-ENV RUBY_PACKAGES ruby-dev ruby-bundler
+ENV PACKAGES ruby-dev ruby-bundler ca-certificates
 
 # Skip installing gem documentation
 RUN echo 'gem: --no-rdoc --no-ri' >> "$HOME/.gemrc"
@@ -12,9 +12,8 @@ RUN echo 'require "irb/completion"' >> "$HOME/.irbrc" && \
     echo 'IRB.conf[:SAVE_HISTORY] = 1000' >> "$HOME/.irbrc"
 
 # Install packages and remove RI documentations
-RUN apk add --update $RUBY_PACKAGES  && \
+RUN apk add --update $PACKAGES  && \
         rm /var/cache/apk/* && \
         rm -rf /usr/share/ri
 
 CMD [ "irb" ]
-
